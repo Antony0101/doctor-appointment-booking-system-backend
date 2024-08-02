@@ -8,7 +8,8 @@
         "format": "npx prettier --write .",
         "start": "touch .env && NODE_ENV=production node --env-file=.env dist/index.js",
         "build": "tsc",
-        "dev": "NODE_ENV=development tsx watch --clear-screen=false --env-file=.env  src/index.ts"
+        "dev": "NODE_ENV=development tsx watch --clear-screen=false --env-file=.env  src/index.ts",
+        "seed": "tsx --env-file=.env  src/scripts/seedDb.ts"
     },
     "repository": {
         "type": "git",
