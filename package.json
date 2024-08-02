@@ -1,0 +1,50 @@
+{
+    "name": "doctor-appointment-booking-system-backend",
+    "version": "1.0.0",
+    "description": "",
+    "main": "dist/index.js",
+    "scripts": {
+        "test": "vitest",
+        "format": "npx prettier --write .",
+        "start": "touch .env && NODE_ENV=production node --env-file=.env dist/index.js",
+        "build": "tsc",
+        "dev": "NODE_ENV=development tsx watch --clear-screen=false --env-file=.env  src/index.ts"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Antony0101/doctor-appointment-booking-system-backend.git"
+    },
+    "author": "antony0101",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/Antony0101/doctor-appointment-booking-system-backend/issues"
+    },
+    "homepage": "https://github.com/Antony0101/doctor-appointment-booking-system-backend#readme",
+    "devDependencies": {
+        "@types/bcrypt": "^5.0.2",
+        "@types/cors": "^2.8.17",
+        "@types/express": "^4.17.21",
+        "@types/jsonwebtoken": "^9.0.6",
+        "@types/morgan": "^1.9.9",
+        "@types/node": "^20.14.2",
+        "@types/uuid": "^9.0.8",
+        "prettier": "^3.3.2",
+        "tsx": "^4.15.1",
+        "typescript": "^5.4.5"
+    },
+    "dependencies": {
+        "axios": "^1.7.2",
+        "bcrypt": "^5.1.1",
+        "cors": "^2.8.5",
+        "express": "^4.19.2",
+        "express-mongo-sanitize": "^2.2.0",
+        "express-xss-sanitizer": "^1.2.0",
+        "helmet": "^7.1.0",
+        "http-status-codes": "^2.3.0",
+        "joi": "^17.13.1",
+        "jsonwebtoken": "^9.0.2",
+        "mongoose": "^8.4.1",
+        "morgan": "^1.10.0",
+        "uuid": "^10.0.0"
+    }
+}

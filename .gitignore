@@ -1,0 +1,9 @@
+node_modules
+*.env
+.jshintrc
+.env.*
+/public
+temp
+dist
+logs
+__pycache__/
