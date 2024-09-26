@@ -9,8 +9,15 @@ const userSchema = new mongoose.Schema(
             required: true,
             unique: true,
         },
-        password: {
+        // password: {
+        //     type: String,
+        //     required: true,
+        // },
+        otp: {
             type: String,
+        },
+        otpExpiry: {
+            type: Date,
             required: true,
         },
         name: {
@@ -20,8 +27,8 @@ const userSchema = new mongoose.Schema(
         phoneNo: {
             type: String,
         },
-        forgotUuid: String,
-        forgotUuidExpiry: Date,
+        // forgotUuid: String,
+        // forgotUuidExpiry: Date,
         role: {
             type: String,
             required: true,
