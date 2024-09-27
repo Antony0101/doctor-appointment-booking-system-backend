@@ -79,6 +79,7 @@ const sendEmail = async ({ to, subject, text }: Params) => {
         }
     } catch (err: any) {
         console.log(err.message);
+        console.log(err.response);
     }
 };
 

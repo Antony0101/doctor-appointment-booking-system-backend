@@ -24,6 +24,16 @@ const APPOINTMENT_STATUS_ENUM = {
 type AppointmentStatusEnumType =
     (typeof APPOINTMENT_STATUS_ENUM)[keyof typeof APPOINTMENT_STATUS_ENUM];
 
+const USER_STATUS_ENUM = {
+    PROFILE_PENDING: "profile_pending",
+    PENDING: "pending",
+    ACTIVE: "active",
+    INACTIVE: "inactive",
+} as const;
+
+type UserStatusEnumType =
+    (typeof USER_STATUS_ENUM)[keyof typeof USER_STATUS_ENUM];
+
 export {
     USER_ROLE_ENUM,
     UserRoleEnumType,
@@ -31,4 +41,6 @@ export {
     AppointmentTypeEnumType,
     APPOINTMENT_STATUS_ENUM,
     AppointmentStatusEnumType,
+    USER_STATUS_ENUM,
+    UserStatusEnumType,
 };

@@ -31,6 +31,7 @@ async function loginStartController(req: Request, res: Response) {
             name: email,
             otp: "123456",
             otpExpiry: new Date(Date.now() - 1000),
+            accoutStatus: "pending",
         });
     }
 
@@ -38,6 +39,7 @@ async function loginStartController(req: Request, res: Response) {
         throw generateAPIError("Role is incorrect", 404);
     }
 
+    console.log("otp", otp);
     user.otp = await hashPassword(otp);
     user.otpExpiry = new Date(Date.now() + 1000 * 60 * 5);
     await user.save();

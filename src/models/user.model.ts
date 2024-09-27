@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import { ExtractDocument, ExtractEntity } from "../utils/mongoHelper.utils.js";
-import { USER_ROLE_ENUM } from "../utils/enums.utils.js";
+import { USER_ROLE_ENUM, USER_STATUS_ENUM } from "../utils/enums.utils.js";
 
 const userSchema = new mongoose.Schema(
     {
@@ -33,6 +33,15 @@ const userSchema = new mongoose.Schema(
             type: String,
             required: true,
             enum: Object.values(USER_ROLE_ENUM),
+        },
+        doctorDetails: {
+            clinicName: String,
+            location: String,
+        },
+        accoutStatus: {
+            type: String,
+            required: true,
+            enum: Object.values(USER_STATUS_ENUM),
         },
         tokenIds: [
             {
