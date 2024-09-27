@@ -14,14 +14,14 @@ const doctorRouter = Router();
 
 doctorRouter.get(
     "/",
-    auth(["admin", "doctor"]),
+    authOptional(),
     JoiQueryValidator(getDoctorsSchema),
     expressWrapper(getDoctorsController),
 );
 
 doctorRouter.put(
     "/:doctorId",
-    authOptional(),
+    auth(["admin", "doctor"]),
     JoiValidator(updateDoctorSchema),
     expressWrapper(updateDoctorController),
 );
