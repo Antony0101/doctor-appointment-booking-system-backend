@@ -3,7 +3,19 @@ import { Request, Response } from "express";
 import { removeSensitiveUserData } from "../auth/auth.service";
 import { getAuthData } from "../../utils/auth.helper";
 import { generateAPIError } from "../../lib/errors/apiError";
-import { UserStatusEnumType } from "../../utils/enums.utils";
+import {
+    DoctorActionEnumType,
+    UserStatusEnumType,
+} from "../../utils/enums.utils";
+import sendEmail from "../../utils/email.utils";
+import {
+    DoctorAccountRejectedEmailBody,
+    DoctorAccountRejectedEmailSubject,
+} from "../../utils/emails/doctorAccountRejected.email";
+import {
+    DoctorAccountApprovedEmailBody,
+    DoctorAccountApprovedEmailSubject,
+} from "../../utils/emails/doctorAccountApproved.email";
 
 const getDoctorsController = async (req: Request, res: Response) => {
     const { user } = getAuthData(req);
@@ -47,6 +59,27 @@ const getDoctorsController = async (req: Request, res: Response) => {
     });
 };
 
+const getDoctorByIdController = async (req: Request, res: Response) => {
+    const { doctorId } = req.params;
+    const user = req.auth?.user;
+    const query: any = {
+        role: "doctor",
+        _id: doctorId,
+    };
+    if (user?.role !== "admin") {
+        query.accoutStatus = "active";
+    }
+    const doctor = await UserModel.findOne(query);
+    if (!doctor) {
+        throw generateAPIError("Doctor not found", 404);
+    }
+    return res.status(200).json({
+        success: true,
+        data: removeSensitiveUserData(doctor),
+        message: "Doctor fetched successfully",
+    });
+};
+
 const updateDoctorController = async (req: Request, res: Response) => {
     const { user } = getAuthData(req);
     const { doctorId } = req.params;
@@ -73,4 +106,49 @@ const updateDoctorController = async (req: Request, res: Response) => {
     });
 };
 
-export { getDoctorsController, updateDoctorController };
+const actionsDoctorController = async (req: Request, res: Response) => {
+    const { user } = getAuthData(req);
+    const { doctorId } = req.params;
+    const { action, data } = req.body as {
+        action: DoctorActionEnumType;
+        data: any;
+    };
+    if (user.role !== "admin") {
+        throw generateAPIError("Unauthorized", 400);
+    }
+    const doctor = await UserModel.findById(doctorId);
+    if (!doctor) {
+        throw generateAPIError("Doctor not found", 404);
+    }
+    if (action === "accept") {
+        if (doctor.accoutStatus === "profile_pending") {
+            throw generateAPIError("Doctor profile is pending", 400);
+        }
+        doctor.accoutStatus = "active";
+        await doctor.save();
+        sendEmail({
+            to: doctor.email,
+            subject: DoctorAccountApprovedEmailSubject,
+            text: DoctorAccountApprovedEmailBody(doctor.name),
+        });
+    } else if (action === "reject") {
+        await UserModel.deleteOne({ _id: doctorId });
+        sendEmail({
+            to: doctor.email,
+            subject: DoctorAccountRejectedEmailSubject,
+            text: DoctorAccountRejectedEmailBody(doctor.name),
+        });
+    }
+    return res.status(200).json({
+        success: true,
+        data: removeSensitiveUserData(doctor),
+        message: "Doctor updated successfully",
+    });
+};
+
+export {
+    getDoctorsController,
+    updateDoctorController,
+    actionsDoctorController,
+    getDoctorByIdController,
+};

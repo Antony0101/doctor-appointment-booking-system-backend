@@ -94,6 +94,7 @@ async function loginController(req: Request, res: Response) {
     await UserModel.updateOne(
         { _id: user._id },
         {
+            $set: { otp: "", otpExpiry: new Date() },
             $push: {
                 tokenIds: {
                     $each: [{ id: tokenId, createdAt: new Date() }],

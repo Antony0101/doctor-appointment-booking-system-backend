@@ -34,6 +34,14 @@ const USER_STATUS_ENUM = {
 type UserStatusEnumType =
     (typeof USER_STATUS_ENUM)[keyof typeof USER_STATUS_ENUM];
 
+const DOCTOR_ACTION_ENUM = {
+    ACCEPT: "accept",
+    REJECT: "reject",
+} as const;
+
+type DoctorActionEnumType =
+    (typeof DOCTOR_ACTION_ENUM)[keyof typeof DOCTOR_ACTION_ENUM];
+
 export {
     USER_ROLE_ENUM,
     UserRoleEnumType,
@@ -43,4 +51,6 @@ export {
     AppointmentStatusEnumType,
     USER_STATUS_ENUM,
     UserStatusEnumType,
+    DOCTOR_ACTION_ENUM,
+    DoctorActionEnumType,
 };

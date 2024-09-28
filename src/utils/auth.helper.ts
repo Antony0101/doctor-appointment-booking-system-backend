@@ -10,4 +10,9 @@ function getAuthData(req: Request) {
     return auth;
 }
 
+function getAuthOptionalData(req: Request) {
+    const auth = req.auth;
+    return auth;
+}
+
 export { getAuthData };
