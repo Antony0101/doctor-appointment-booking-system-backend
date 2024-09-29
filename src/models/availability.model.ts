@@ -6,27 +6,57 @@ const availabilityObject = {
     timeSlots: [
         {
             _id: false,
-            startTime: Date,
-            endTime: Date,
+            startTime: {
+                type: Date,
+                required: true,
+            },
+            endTime: {
+                type: Date,
+                required: true,
+            },
         },
     ],
 };
 
 const availabilitySchema = new mongoose.Schema(
     {
-        userId: {
+        doctorId: {
             type: mongoose.Schema.Types.ObjectId,
             required: true,
             unique: true,
         },
-        availableFrom: Date,
-        monday: availabilityObject,
-        tuesday: availabilityObject,
-        wednesday: availabilityObject,
-        thursday: availabilityObject,
-        friday: availabilityObject,
-        saturday: availabilityObject,
-        sunday: availabilityObject,
+        availableFrom: {
+            type: Date,
+            required: true,
+        },
+        monday: {
+            type: availabilityObject,
+            required: true,
+        },
+        tuesday: {
+            type: availabilityObject,
+            required: true,
+        },
+        wednesday: {
+            type: availabilityObject,
+            required: true,
+        },
+        thursday: {
+            type: availabilityObject,
+            required: true,
+        },
+        friday: {
+            type: availabilityObject,
+            required: true,
+        },
+        saturday: {
+            type: availabilityObject,
+            required: true,
+        },
+        sunday: {
+            type: availabilityObject,
+            required: true,
+        },
     },
     {
         timestamps: true,
